@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(git --version)",
+      "Bash(pnpm -v)",
+      "Bash(vercel --version)",
+      "Bash(npm i:*)",
+      "Bash(npx getdesign@latest:*)",
+      "Bash(pnpm build:*)"
+    ]
+  }
+}
