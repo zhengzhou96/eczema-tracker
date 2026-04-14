@@ -200,6 +200,27 @@ export interface Database {
           },
         ];
       };
+      saved_routines: {
+        Row: {
+          id: string;
+          user_id: string;
+          routine_id: string;
+          saved_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          routine_id: string;
+          saved_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          routine_id?: string;
+          saved_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
