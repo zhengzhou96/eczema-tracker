@@ -112,8 +112,7 @@ export default async function YouPage() {
           Icon={CalendarDays}
           label={monthName}
           primary={`${loggedThisMonth} of ${daysInMonth} days logged`}
-          secondary="Calendar coming soon"
-          disabled
+          secondary="Open calendar"
         />
 
         <PreviewCard
