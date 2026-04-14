@@ -14,7 +14,7 @@ export async function AppHeader() {
     <header className="sticky top-0 z-30 w-full border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-[480px] items-center justify-between px-5 py-3">
         <Link
-          href="/dashboard"
+          href="/home"
           className="text-lg font-black tracking-tight"
         >
           EczemaTrack
