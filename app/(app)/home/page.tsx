@@ -1,6 +1,8 @@
 import { BarChart3, ChevronRight, ExternalLink, PencilLine, Sparkles, Trophy } from "lucide-react";
 import Link from "next/link";
 import { StreakCounter } from "@/components/streak-counter";
+import { buildStats, evaluateAchievements } from "@/lib/achievements/compute";
+import { achievements } from "@/lib/achievements/definitions";
 import { getTodaysTip } from "@/lib/content/tips";
 import { calculateStreak, type LogSummary } from "@/lib/logs/analytics";
 import { createClient } from "@/lib/supabase/server";
@@ -28,17 +30,12 @@ export default async function HomePage() {
     .eq("id", user.id)
     .maybeSingle();
 
-  const since = new Date();
-  since.setDate(since.getDate() - 29);
-  const sinceIso = since.toISOString().slice(0, 10);
-
   const { data: logRows } = await supabase
     .from("daily_logs")
     .select(
       "id, log_date, itch_level, stress_level, sleep_hours, sleep_quality, affected_areas, notes",
     )
     .eq("user_id", user.id)
-    .gte("log_date", sinceIso)
     .order("log_date", { ascending: false });
 
   const logs: LogSummary[] = logRows ?? [];
@@ -48,6 +45,22 @@ export default async function HomePage() {
   const tip = getTodaysTip();
   const firstName =
     profile?.display_name?.trim().split(/\s+/)[0] ?? "there";
+
+  const { data: foodRows } = await supabase
+    .from("food_entries")
+    .select("food_name");
+
+  const foodNames = (foodRows ?? []).map((f) => f.food_name);
+
+  const { count: analysesCount } = await supabase
+    .from("ai_analyses")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id);
+
+  const stats = buildStats(logs, foodNames, analysesCount ?? 0);
+  const { earned } = evaluateAchievements(stats);
+  const earnedCount = earned.length;
+  const milestonesTotal = achievements.length;
 
   return (
     <div className="space-y-5">
@@ -129,9 +142,8 @@ export default async function HomePage() {
         <QuickLink
           href="/milestones"
           label="Milestones"
-          caption="Coming soon"
+          caption={`${earnedCount} of ${milestonesTotal} earned`}
           Icon={Trophy}
-          disabled
         />
       </div>
 
