@@ -1,3 +1,4 @@
+import { AnalyzePanel } from "@/components/analyze-panel";
 import { BodyHeatmap } from "@/components/body-heatmap";
 import { StreakCounter } from "@/components/streak-counter";
 import { TrendChart } from "@/components/trend-chart";
@@ -12,6 +13,8 @@ import {
   type LogSummary,
 } from "@/lib/logs/analytics";
 import { createClient } from "@/lib/supabase/server";
+
+const DAILY_LIMIT = 3;
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -55,6 +58,17 @@ export default async function DashboardPage() {
   const foods = topFoods(foodRows ?? []);
   const correlation = sleepItchCorrelation(logs);
 
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+  const { count: usedToday } = await supabase
+    .from("ai_analyses")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", startOfDay.toISOString());
+
+  const initialRemaining = Math.max(0, DAILY_LIMIT - (usedToday ?? 0));
+  const hasEnoughData = logs.length >= 3;
+
   return (
     <div className="space-y-5">
       <div className="space-y-2">
@@ -80,6 +94,12 @@ export default async function DashboardPage() {
           suffix={avgSleep != null ? "h" : undefined}
         />
       </div>
+
+      <AnalyzePanel
+        initialRemaining={initialRemaining}
+        initialLimit={DAILY_LIMIT}
+        hasEnoughData={hasEnoughData}
+      />
 
       <Section title="Itch trend (14 days)">
         <TrendChart data={trend} />
