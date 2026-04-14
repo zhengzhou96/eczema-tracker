@@ -1,3 +1,5 @@
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
@@ -18,11 +20,18 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
+        <Link
+          href="/you"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground"
+        >
+          <ChevronLeft className="size-3" />
+          Back to You
+        </Link>
         <h1 className="text-4xl font-black leading-[0.9] tracking-tight">
           Settings
         </h1>
         <p className="text-base font-medium text-muted-foreground">
-          Profile, preferences, and data — all in Session 6.
+          Profile editing, CSV export, and account deletion land soon.
         </p>
       </div>
 

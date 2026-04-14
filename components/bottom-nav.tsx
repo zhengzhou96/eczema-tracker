@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, History, Home, Plus, Settings } from "lucide-react";
+import { BarChart3, History, Home, Plus, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const leftTabs = [
@@ -12,7 +12,7 @@ const leftTabs = [
 
 const rightTabs = [
   { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/you", label: "You", icon: User },
 ] as const;
 
 export function BottomNav() {
