@@ -43,6 +43,11 @@ export default async function YouPage() {
     .select("id", { count: "exact", head: true })
     .eq("user_id", user.id);
 
+  const { count: savedRoutinesCount } = await supabase
+    .from("saved_routines")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id);
+
   const stats = buildStats(logs, foodNames, analysesCount ?? 0);
   const { earned } = evaluateAchievements(stats);
 
@@ -120,8 +125,11 @@ export default async function YouPage() {
           Icon={BookHeart}
           label="Community routines"
           primary="Curated by the team"
-          secondary="Coming soon"
-          disabled
+          secondary={
+            savedRoutinesCount
+              ? `${savedRoutinesCount} saved`
+              : "Browse routines"
+          }
         />
       </div>
 
