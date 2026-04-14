@@ -247,6 +247,34 @@ create policy "ai_analyses_delete_own" on public.ai_analyses
   for delete using (auth.uid() = user_id);
 
 -- ---------------------------------------------------------------------------
+-- saved_routines
+-- ---------------------------------------------------------------------------
+create table if not exists public.saved_routines (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null references auth.users (id) on delete cascade,
+  routine_id  text not null,
+  saved_at    timestamptz not null default now(),
+  unique (user_id, routine_id)
+);
+
+create index if not exists saved_routines_user_idx
+  on public.saved_routines (user_id, saved_at desc);
+
+alter table public.saved_routines enable row level security;
+
+drop policy if exists "saved_routines_select_own" on public.saved_routines;
+create policy "saved_routines_select_own" on public.saved_routines
+  for select using (auth.uid() = user_id);
+
+drop policy if exists "saved_routines_insert_own" on public.saved_routines;
+create policy "saved_routines_insert_own" on public.saved_routines
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists "saved_routines_delete_own" on public.saved_routines;
+create policy "saved_routines_delete_own" on public.saved_routines
+  for delete using (auth.uid() = user_id);
+
+-- ---------------------------------------------------------------------------
 -- Storage: photos bucket policies
 -- Create the bucket manually (private) in Dashboard → Storage, then run these.
 -- Path convention: {user_id}/{log_date}/{uuid}.jpg
