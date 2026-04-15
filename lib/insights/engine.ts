@@ -17,7 +17,7 @@ export type FindingRule =
   | 'stress_flare'
   | 'sleep_flare'
   | 'food_flare'
-  | 'consecutive_flares'
+  | 'frequent_flares'
   | 'clear_streak';
 
 export type Confidence = 'possible' | 'likely' | 'strong';
@@ -119,7 +119,7 @@ export function getFindings(logs: InsightLog[], foods: InsightFood[]): Finding[]
     });
   }
 
-  // consecutive_flares: 3+ flare days within any 7-day window
+  // frequent_flares: 3+ flare days within any 7-day window
   let maxConsecutive = 0;
   const windowSize = 7;
   for (let i = 0; i < sorted.length; i++) {
@@ -130,9 +130,10 @@ export function getFindings(logs: InsightLog[], foods: InsightFood[]): Finding[]
   }
   if (maxConsecutive >= 3) {
     findings.push({
-      rule: 'consecutive_flares',
+      rule: 'frequent_flares',
       confidence: confidenceFromCount(maxConsecutive),
       matchCount: maxConsecutive,
+      supportingData: `${maxConsecutive} flares within 7 days`,
     });
   }
 
@@ -163,7 +164,9 @@ export function getPrediction(logs: InsightLog[]): PredictionState {
   const sorted = [...logs].sort((a, b) => b.log_date.localeCompare(a.log_date));
   const last2 = sorted.slice(0, 2);
   const allFlare = last2.every((l) => l.skin_status === 'flare');
-  const stressRecent = last2.some((l) => l.quick_tags.includes('stress'));
+  const stressRecent = last2.some(
+    (l) => l.quick_tags.includes('stress') && l.skin_status !== 'clear'
+  );
   if (allFlare || stressRecent) return 'elevated';
   const allClear = last2.every((l) => l.skin_status === 'clear');
   if (allClear) return 'stable';
