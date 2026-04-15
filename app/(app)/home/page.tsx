@@ -3,7 +3,7 @@ import Link from "next/link";
 import { StreakCounter } from "@/components/streak-counter";
 import { buildStats, evaluateAchievements } from "@/lib/achievements/compute";
 import { achievements } from "@/lib/achievements/definitions";
-import { getTodaysTip } from "@/lib/content/tips";
+import { getTips } from "@/lib/content/tips";
 import { calculateStreak, type LogSummary } from "@/lib/logs/analytics";
 import { createClient } from "@/lib/supabase/server";
 
@@ -42,7 +42,7 @@ export default async function HomePage() {
   const today = new Date().toISOString().slice(0, 10);
   const todayLog = logs.find((l) => l.log_date === today);
   const streak = calculateStreak(logs);
-  const tip = getTodaysTip();
+  const tips = getTips(3);
   const firstName =
     profile?.display_name?.trim().split(/\s+/)[0] ?? "there";
 
@@ -112,24 +112,36 @@ export default async function HomePage() {
 
       <StreakCounter streak={streak} />
 
-      <section className="rounded-3xl border border-border bg-card p-5">
+      <section className="space-y-3">
         <div className="flex items-center gap-2">
           <Sparkles className="size-4 text-muted-foreground" aria-hidden />
           <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-            Today&apos;s tip
+            Tips &amp; articles
           </span>
         </div>
-        <h2 className="mt-3 text-lg font-black leading-tight">{tip.title}</h2>
-        <p className="mt-2 text-sm leading-6 text-foreground">{tip.body}</p>
-        <a
-          href={tip.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
-        >
-          Source: {tip.source}
-          <ExternalLink className="size-3" aria-hidden />
-        </a>
+        <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2">
+          {tips.map((tip) => (
+            <div
+              key={tip.id}
+              className="w-[82%] shrink-0 snap-start rounded-3xl border border-border bg-card p-5"
+            >
+              <span className="inline-block rounded-full bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-accent-foreground">
+                {tip.category}
+              </span>
+              <h2 className="mt-3 text-base font-black leading-tight">{tip.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-foreground">{tip.body}</p>
+              <a
+                href={tip.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+              >
+                Source: {tip.source}
+                <ExternalLink className="size-3" aria-hidden />
+              </a>
+            </div>
+          ))}
+        </div>
       </section>
 
       <div className="grid grid-cols-2 gap-3">
