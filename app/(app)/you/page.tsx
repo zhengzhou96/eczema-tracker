@@ -160,13 +160,42 @@ export default async function YouPage() {
       </section>
 
       <div className="space-y-3">
-        <PreviewCard
-          href="/milestones"
-          Icon={Trophy}
-          label="Milestones"
-          primary={`${earned.length} of ${achievements.length} earned`}
-          secondary="See achievements"
-        />
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Milestones · {earned.length} of {achievements.length}
+            </span>
+            <Link
+              href="/milestones"
+              className="text-xs font-semibold text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            >
+              See all →
+            </Link>
+          </div>
+          {earned.length === 0 ? (
+            <div className="rounded-3xl border border-border bg-card p-5 text-center">
+              <Trophy className="mx-auto size-8 text-muted-foreground" aria-hidden />
+              <p className="mt-2 text-sm font-bold">No milestones yet</p>
+              <p className="mt-1 text-xs font-medium text-muted-foreground">
+                Log 3 days in a row to earn your first one.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {earned.map((a) => (
+                <div
+                  key={a.id}
+                  className="flex items-center gap-2 rounded-2xl border border-border bg-card px-3 py-2"
+                >
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                    <a.icon className="size-4" aria-hidden />
+                  </div>
+                  <span className="text-xs font-bold leading-tight">{a.title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="space-y-3">
           <div className="flex items-center justify-between">
