@@ -1,4 +1,5 @@
-import { BookHeart, CalendarDays, ChevronRight, Settings as SettingsIcon, Trophy } from "lucide-react";
+import { BookHeart, ChevronRight, Settings as SettingsIcon, Trophy } from "lucide-react";
+import { CalendarGrid, type CalendarDay, type DayLog } from "@/components/calendar-grid";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { buildStats, evaluateAchievements } from "@/lib/achievements/compute";
@@ -48,16 +49,70 @@ export default async function YouPage() {
     .select("id", { count: "exact", head: true })
     .eq("user_id", user.id);
 
+  const now = new Date();
+  const currentYear = now.getUTCFullYear();
+  const currentMonth = now.getUTCMonth() + 1;
+  const monthStr = String(currentMonth).padStart(2, "0");
+  const daysInCalendar = new Date(Date.UTC(currentYear, currentMonth, 0)).getUTCDate();
+  const firstDay = `${currentYear}-${monthStr}-01`;
+  const lastDay = `${currentYear}-${monthStr}-${String(daysInCalendar).padStart(2, "0")}`;
+
+  const { data: calendarRows } = await supabase
+    .from("daily_logs")
+    .select(
+      "log_date, itch_level, stress_level, sleep_hours, sleep_quality, affected_areas, notes",
+    )
+    .eq("user_id", user.id)
+    .gte("log_date", firstDay)
+    .lte("log_date", lastDay);
+
+  const logsByDate = new Map<string, DayLog>();
+  for (const l of calendarRows ?? []) {
+    if (typeof l.log_date === "string") {
+      logsByDate.set(l.log_date, {
+        itch_level: l.itch_level,
+        stress_level: l.stress_level,
+        sleep_hours: l.sleep_hours,
+        sleep_quality: l.sleep_quality,
+        affected_areas: l.affected_areas,
+        notes: l.notes,
+      });
+    }
+  }
+
+  const firstDayOfMonth = new Date(Date.UTC(currentYear, currentMonth - 1, 1));
+  const firstWeekday = firstDayOfMonth.getUTCDay();
+  const todayIso = now.toISOString().slice(0, 10);
+
+  const calendarDays: CalendarDay[] = [];
+  for (let i = 0; i < firstWeekday; i++) {
+    calendarDays.push({
+      date: `blank-${i}`,
+      dayOfMonth: 0,
+      inMonth: false,
+      isFuture: false,
+      isToday: false,
+      log: null,
+    });
+  }
+  for (let d = 1; d <= daysInCalendar; d++) {
+    const iso = `${currentYear}-${monthStr}-${String(d).padStart(2, "0")}`;
+    calendarDays.push({
+      date: iso,
+      dayOfMonth: d,
+      inMonth: true,
+      isFuture: iso > todayIso,
+      isToday: iso === todayIso,
+      log: logsByDate.get(iso) ?? null,
+    });
+  }
+
   const stats = buildStats(logs, foodNames, analysesCount ?? 0);
   const { earned } = evaluateAchievements(stats);
 
-  const now = new Date();
-  const monthPrefix = now.toISOString().slice(0, 7);
-  const [yearStr, monthStr] = monthPrefix.split("-");
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10);
-  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
-  const monthName = new Date(Date.UTC(year, month - 1, 1)).toLocaleString(
+  const monthPrefix = `${currentYear}-${monthStr}`;
+  const daysInMonth = daysInCalendar;
+  const monthName = new Date(Date.UTC(currentYear, currentMonth - 1, 1)).toLocaleString(
     "en-US",
     { month: "long", timeZone: "UTC" },
   );
@@ -112,13 +167,23 @@ export default async function YouPage() {
           secondary="See achievements"
         />
 
-        <PreviewCard
-          href="/calendar"
-          Icon={CalendarDays}
-          label={monthName}
-          primary={`${loggedThisMonth} of ${daysInMonth} days logged`}
-          secondary="Open calendar"
-        />
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              {monthName} · {loggedThisMonth} of {daysInMonth} days
+            </span>
+            <Link
+              href="/calendar"
+              className="text-xs font-semibold text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            >
+              Full view →
+            </Link>
+          </div>
+          <div className="rounded-3xl border border-border bg-card p-4">
+            <CalendarGrid days={calendarDays} />
+          </div>
+          <CalendarLegend />
+        </section>
 
         <PreviewCard
           href="/routines"
@@ -196,5 +261,28 @@ function PreviewCard({
     >
       {content}
     </Link>
+  );
+}
+
+function CalendarLegend() {
+  const items = [
+    { label: "Calm", cls: "bg-emerald-500/25" },
+    { label: "Mild", cls: "bg-amber-400/35" },
+    { label: "Flared", cls: "bg-orange-500/45" },
+    { label: "Severe", cls: "bg-red-500/55" },
+    { label: "No log", cls: "border border-dashed border-border" },
+  ];
+  return (
+    <div className="flex flex-wrap gap-2">
+      {items.map((i) => (
+        <div
+          key={i.label}
+          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-[10px] font-semibold text-muted-foreground"
+        >
+          <div className={`size-3 rounded ${i.cls}`} />
+          {i.label}
+        </div>
+      ))}
+    </div>
   );
 }
