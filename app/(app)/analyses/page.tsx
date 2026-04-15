@@ -1,4 +1,4 @@
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Microscope } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { renderSimpleMarkdown } from "@/lib/markdown";
@@ -39,6 +39,14 @@ export default async function AnalysesPage() {
         <p className="text-base font-medium text-muted-foreground">
           Every AI reflection you&apos;ve run, newest first.
         </p>
+        <Link
+          href="/analyze-photo"
+          className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-transform hover:scale-[1.03] active:scale-95"
+          style={{ backgroundColor: "#9fe870", color: "#163300" }}
+        >
+          <Microscope className="size-4" aria-hidden />
+          Analyze a photo →
+        </Link>
       </div>
 
       {analyses.length === 0 ? (
@@ -91,6 +99,7 @@ export default async function AnalysesPage() {
 function formatAnalysisType(type: string): string {
   if (type === "weekly_7d") return "7-day reflection";
   if (type === "weekly_30d") return "30-day reflection";
+  if (type === "photo_analysis") return "Photo observation";
   return type;
 }
 
