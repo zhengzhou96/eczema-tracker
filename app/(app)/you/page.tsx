@@ -1,5 +1,6 @@
 import { BookHeart, ChevronRight, Settings as SettingsIcon, Trophy } from "lucide-react";
 import { CalendarGrid, type CalendarDay, type DayLog } from "@/components/calendar-grid";
+import { CalendarLegend } from "@/components/calendar-legend";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { buildStats, evaluateAchievements } from "@/lib/achievements/compute";
@@ -264,25 +265,3 @@ function PreviewCard({
   );
 }
 
-function CalendarLegend() {
-  const items = [
-    { label: "Calm", cls: "bg-emerald-500/25" },
-    { label: "Mild", cls: "bg-amber-400/35" },
-    { label: "Flared", cls: "bg-orange-500/45" },
-    { label: "Severe", cls: "bg-red-500/55" },
-    { label: "No log", cls: "border border-dashed border-border" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-2">
-      {items.map((i) => (
-        <div
-          key={i.label}
-          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-[10px] font-semibold text-muted-foreground"
-        >
-          <div className={`size-3 rounded ${i.cls}`} />
-          {i.label}
-        </div>
-      ))}
-    </div>
-  );
-}
