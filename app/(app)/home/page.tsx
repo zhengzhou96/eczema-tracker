@@ -119,9 +119,13 @@ export default async function HomePage() {
             Tips &amp; articles
           </span>
         </div>
-        <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2">
+        <div
+          role="region"
+          aria-label="Tips and articles"
+          className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2"
+        >
           {tips.map((tip) => (
-            <div
+            <article
               key={tip.id}
               className="w-[82%] shrink-0 snap-start rounded-3xl border border-border bg-card p-5"
             >
@@ -139,7 +143,7 @@ export default async function HomePage() {
                 Source: {tip.source}
                 <ExternalLink className="size-3" aria-hidden />
               </a>
-            </div>
+            </article>
           ))}
         </div>
       </section>
