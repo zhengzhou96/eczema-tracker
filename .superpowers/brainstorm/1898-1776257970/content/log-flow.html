@@ -1,0 +1,131 @@
+<h2>Quick-Log Flow</h2>
+<p class="subtitle">4 steps. Steps 3 & 4 are conditional. Does this feel right?</p>
+
+<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+
+  <!-- Step 1 -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685">Step 1</div>
+    <div style="width:200px;background:#fff;border-radius:28px;border:2px solid rgba(14,15,12,0.12);overflow:hidden;box-shadow:0 4px 20px rgba(14,15,12,0.08)">
+      <div style="padding:28px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;min-height:320px;justify-content:center">
+        <div style="font-size:22px;font-weight:900;text-align:center;line-height:1;color:#0e0f0c;letter-spacing:-0.5px">How is your<br>skin today?</div>
+        <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+          <button style="width:100%;padding:14px;border-radius:9999px;border:2px solid rgba(14,15,12,0.12);background:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+            <span>👍</span> Clear
+          </button>
+          <button style="width:100%;padding:14px;border-radius:9999px;border:2px solid rgba(14,15,12,0.12);background:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+            <span>😐</span> Mild
+          </button>
+          <button style="width:100%;padding:14px;border-radius:9999px;background:#163300;border:2px solid #163300;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:#9fe870">
+            <span>🔥</span> Flare
+          </button>
+        </div>
+        <div style="font-size:11px;color:#868685;text-align:center">Tap to select. That's it.</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#868685;text-align:center;max-width:200px">One tap saves immediately<br>then shows step 2</div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex;align-items:center;padding-top:60px;font-size:20px;color:#9fe870;font-weight:900">→</div>
+
+  <!-- Step 2 -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685">Step 2 — optional</div>
+    <div style="width:200px;background:#fff;border-radius:28px;border:2px solid rgba(14,15,12,0.12);overflow:hidden;box-shadow:0 4px 20px rgba(14,15,12,0.08)">
+      <div style="padding:24px 16px;display:flex;flex-direction:column;gap:16px;min-height:320px">
+        <div style="font-size:17px;font-weight:900;color:#0e0f0c;text-align:center;line-height:1.1">Anything<br>notable?</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+          <span style="padding:7px 12px;border-radius:9999px;border:1.5px solid #9fe870;background:#f0fce8;font-size:12px;font-weight:700;cursor:pointer">🍜 Food</span>
+          <span style="padding:7px 12px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);background:#f8f8f7;font-size:12px;font-weight:700;cursor:pointer">😰 Stress</span>
+          <span style="padding:7px 12px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);background:#f8f8f7;font-size:12px;font-weight:700;cursor:pointer">😴 Poor sleep</span>
+          <span style="padding:7px 12px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);background:#f8f8f7;font-size:12px;font-weight:700;cursor:pointer">🧴 New product</span>
+          <span style="padding:7px 12px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);background:#f8f8f7;font-size:12px;font-weight:700;cursor:pointer">🌦 Weather</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <button style="width:100%;padding:11px;border-radius:9999px;background:#9fe870;border:none;font-size:13px;font-weight:700;color:#163300;cursor:pointer">Done →</button>
+          <button style="width:100%;padding:8px;border-radius:9999px;background:transparent;border:none;font-size:12px;font-weight:600;color:#868685;cursor:pointer">Skip</button>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#868685;text-align:center;max-width:200px">Multi-select. Tapping a chip<br>selects it (shown highlighted)</div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex;align-items:center;padding-top:60px;font-size:20px;color:#9fe870;font-weight:900">→</div>
+
+  <!-- Step 3 (conditional) -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685">Step 3 — conditional</div>
+    <div style="width:200px;background:#fff;border-radius:28px;border:2px solid rgba(14,15,12,0.12);overflow:hidden;box-shadow:0 4px 20px rgba(14,15,12,0.08)">
+      <div style="padding:24px 16px;display:flex;flex-direction:column;gap:14px;min-height:320px">
+        <div style="font-size:14px;font-weight:900;color:#0e0f0c;text-align:center">How stressful<br>was today?</div>
+        <!-- Stress slider mockup -->
+        <div style="padding:4px 0">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:10px;color:#868685">Low</span>
+            <span style="font-size:10px;color:#868685">High</span>
+          </div>
+          <div style="height:6px;background:#e8ebe6;border-radius:9999px;position:relative">
+            <div style="position:absolute;left:0;width:70%;height:100%;background:#9fe870;border-radius:9999px"></div>
+            <div style="position:absolute;left:70%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;background:#9fe870;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.15)"></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(14,15,12,0.08);padding-top:12px">
+          <div style="font-size:12px;font-weight:700;color:#0e0f0c;margin-bottom:8px">Food tagged? Recent foods:</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <span style="padding:6px 10px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);font-size:11px;font-weight:600;color:#0e0f0c">🍝 Pasta</span>
+            <span style="padding:6px 10px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);font-size:11px;font-weight:600;color:#0e0f0c">🥛 Dairy</span>
+            <span style="padding:6px 10px;border-radius:9999px;border:1.5px solid rgba(14,15,12,0.12);font-size:11px;font-weight:600;color:#0e0f0c">+ Add food…</span>
+          </div>
+        </div>
+        <button style="width:100%;padding:11px;border-radius:9999px;background:#9fe870;border:none;font-size:13px;font-weight:700;color:#163300;cursor:pointer;margin-top:auto">Done →</button>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#868685;text-align:center;max-width:200px">Only appears if Stress or Food<br>chips were selected</div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex;align-items:center;padding-top:60px;font-size:20px;color:#9fe870;font-weight:900">→</div>
+
+  <!-- Step 4: Done -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#868685">Step 4 — done state</div>
+    <div style="width:200px;background:#fff;border-radius:28px;border:2px solid rgba(14,15,12,0.12);overflow:hidden;box-shadow:0 4px 20px rgba(14,15,12,0.08)">
+      <div style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:16px;min-height:320px;justify-content:center;text-align:center">
+        <div style="width:56px;height:56px;background:#9fe870;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px">✅</div>
+        <div style="font-size:20px;font-weight:900;color:#0e0f0c;line-height:1.1">Logged</div>
+        <!-- Early user version -->
+        <div style="background:#f0fce8;border-radius:16px;padding:12px;border:1px solid #9fe870">
+          <div style="font-size:12px;color:#163300;font-weight:600;line-height:1.4">"Stress may be affecting your skin"</div>
+          <div style="font-size:10px;color:#868685;margin-top:4px">Pattern detected after 4 logs</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+          <button style="width:100%;padding:11px;border-radius:9999px;background:#163300;border:none;font-size:12px;font-weight:700;color:#9fe870;cursor:pointer">Add more detail →</button>
+          <button style="width:100%;padding:8px;border-radius:9999px;background:transparent;border:none;font-size:12px;font-weight:600;color:#868685;cursor:pointer">Go home</button>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#868685;text-align:center;max-width:200px">"Add more detail" opens<br>existing full log form</div>
+  </div>
+
+</div>
+
+<div style="margin-top:28px;max-width:760px;margin-left:auto;margin-right:auto">
+  <div class="options">
+    <div class="option" data-choice="log-looks-good" onclick="toggleSelect(this)">
+      <div class="letter">✓</div>
+      <div class="content">
+        <h3>Flow looks right</h3>
+        <p>Step 1 saves immediately on tap, step 2 optional chips, step 3 conditional micro-inputs, step 4 done + insight hook + "Add more detail" escape hatch.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="log-needs-changes" onclick="toggleSelect(this)">
+      <div class="letter">!</div>
+      <div class="content">
+        <h3>Needs changes</h3>
+        <p>Tell me what to adjust — step order, chip set, conditional logic, or the done state.</p>
+      </div>
+    </div>
+  </div>
+</div>

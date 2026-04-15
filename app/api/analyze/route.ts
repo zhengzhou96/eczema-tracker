@@ -101,7 +101,7 @@ export async function POST(request: Request) {
   const { data: logRows, error: logsError } = await supabase
     .from("daily_logs")
     .select(
-      "id, log_date, itch_level, stress_level, sleep_hours, sleep_quality, affected_areas, notes",
+      "id, log_date, itch_level, stress_level, sleep_hours, sleep_quality, affected_areas, notes, skin_status, quick_tags",
     )
     .eq("user_id", user.id)
     .gte("log_date", sinceIso)

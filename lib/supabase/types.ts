@@ -19,6 +19,7 @@ export interface Database {
           climate_zone: string | null;
           skin_type: number | null;
           known_triggers: string[];
+          has_onboarded: boolean;
           created_at: string;
         };
         Insert: {
@@ -30,6 +31,7 @@ export interface Database {
           climate_zone?: string | null;
           skin_type?: number | null;
           known_triggers?: string[];
+          has_onboarded?: boolean;
           created_at?: string;
         };
         Update: {
@@ -41,6 +43,7 @@ export interface Database {
           climate_zone?: string | null;
           skin_type?: number | null;
           known_triggers?: string[];
+          has_onboarded?: boolean;
           created_at?: string;
         };
         Relationships: [
@@ -63,6 +66,8 @@ export interface Database {
           sleep_quality: number | null;
           affected_areas: string[];
           notes: string | null;
+          skin_status: "clear" | "mild" | "flare" | null;
+          quick_tags: string[];
           created_at: string;
         };
         Insert: {
@@ -75,6 +80,8 @@ export interface Database {
           sleep_quality?: number | null;
           affected_areas?: string[];
           notes?: string | null;
+          skin_status?: "clear" | "mild" | "flare" | null;
+          quick_tags?: string[];
           created_at?: string;
         };
         Update: {
@@ -87,6 +94,8 @@ export interface Database {
           sleep_quality?: number | null;
           affected_areas?: string[];
           notes?: string | null;
+          skin_status?: "clear" | "mild" | "flare" | null;
+          quick_tags?: string[];
           created_at?: string;
         };
         Relationships: [

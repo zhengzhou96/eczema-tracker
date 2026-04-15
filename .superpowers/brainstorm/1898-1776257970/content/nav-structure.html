@@ -1,0 +1,81 @@
+<h2>Navigation Structure</h2>
+<p class="subtitle">3 primary tabs + center Log FAB + "More" overflow. Does this feel right?</p>
+
+<div class="section">
+  <div class="label">Current (4 tabs + FAB)</div>
+  <div style="margin-top:12px; background:#f8f8f7; border-radius:16px; padding:16px 20px; border:1px solid rgba(14,15,12,0.1)">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
+      <div style="display:flex; flex:1; justify-content:space-around">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.5">
+          <div style="font-size:18px">🏠</div>
+          <div style="font-size:10px;font-weight:600">Home</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.5">
+          <div style="font-size:18px">📋</div>
+          <div style="font-size:10px;font-weight:600">History</div>
+        </div>
+      </div>
+      <div style="width:56px;height:56px;border-radius:50%;background:#9fe870;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#163300;margin-top:-20px;flex-shrink:0">+</div>
+      <div style="display:flex; flex:1; justify-content:space-around">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.5">
+          <div style="font-size:18px">📊</div>
+          <div style="font-size:10px;font-weight:600">Dashboard</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.5">
+          <div style="font-size:18px">👤</div>
+          <div style="font-size:10px;font-weight:600">You</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px">
+  <div class="label">New (3 tabs + FAB + More)</div>
+  <div style="margin-top:12px; background:#f8f8f7; border-radius:16px; padding:16px 20px; border:1px solid #9fe870">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
+      <div style="display:flex; flex:1; justify-content:space-around">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="font-size:18px">🏠</div>
+          <div style="font-size:10px;font-weight:700;color:#0e0f0c">Home</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.45">
+          <div style="font-size:18px">📋</div>
+          <div style="font-size:10px;font-weight:600">History</div>
+        </div>
+      </div>
+      <div style="width:56px;height:56px;border-radius:50%;background:#9fe870;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#163300;margin-top:-20px;flex-shrink:0">+</div>
+      <div style="display:flex; flex:1; justify-content:space-around">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.45">
+          <div style="font-size:18px">📈</div>
+          <div style="font-size:10px;font-weight:600">Insights</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.45">
+          <div style="font-size:18px">⋯</div>
+          <div style="font-size:10px;font-weight:600">More</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:10px;font-size:12px;color:#868685">"More" expands to: Dashboard · You · Calendar · Milestones · Routines · AI Analysis</p>
+</div>
+
+<div class="section" style="margin-top:28px">
+  <div class="label">One question on the 4th tab</div>
+  <div class="options" style="margin-top:12px">
+    <div class="option" data-choice="insights-tab" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>Insights tab (4th slot)</h3>
+        <p>Dedicated tab for patterns, predictions, and trends. Surfaces the intelligence the user cares most about. Replaces Dashboard in the nav.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="more-only" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>More tab only (no Insights)</h3>
+        <p>Pure 3-tab layout: Home · History · [+] · ⋯ More. Insights live on the Home screen. Simpler nav, everything in one place.</p>
+      </div>
+    </div>
+  </div>
+</div>

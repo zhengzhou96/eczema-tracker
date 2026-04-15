@@ -20,7 +20,12 @@
       "Bash(cmd /c \"taskkill /PID 32764 /F\")",
       "Bash(wmic process:*)",
       "Bash(curl -s http://localhost:3000/api/health)",
-      "Bash(pnpm typecheck:*)"
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm add:*)",
+      "Bash(cmd:*)",
+      "Bash(git:*)",
+      "Bash(bash *)",
+      "Bash(cat \"F:/Eczema Tracking App/.superpowers/brainstorm/\"*/state/server-info)"
     ]
   }
 }

@@ -10,6 +10,8 @@ export type LogSummary = Pick<
   | "sleep_quality"
   | "affected_areas"
   | "notes"
+  | "skin_status"
+  | "quick_tags"
 >;
 
 function toLocalDateString(d: Date): string {

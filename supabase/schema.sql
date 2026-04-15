@@ -306,3 +306,18 @@ create policy "photos_storage_delete_own" on storage.objects
     bucket_id = 'photos'
     and auth.uid()::text = (storage.foldername(name))[1]
   );
+
+-- ---------------------------------------------------------------------------
+-- 2026-04-15 Product redesign: quick-log columns
+-- NOTE: Run this migration in Supabase Dashboard → SQL Editor manually.
+-- ---------------------------------------------------------------------------
+alter table public.daily_logs
+  add column if not exists skin_status text
+    check (skin_status in ('clear', 'mild', 'flare')),
+  add column if not exists quick_tags text[] not null default '{}'::text[];
+
+alter table public.profiles
+  add column if not exists has_onboarded boolean not null default false;
+
+-- Mark all existing users as already onboarded (they pre-date onboarding)
+update public.profiles set has_onboarded = true where has_onboarded = false;
