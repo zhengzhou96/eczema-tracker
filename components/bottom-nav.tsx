@@ -2,17 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, History, Home, Plus, User } from "lucide-react";
+import { History, Home, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MoreButton } from "./more-panel";
 
 const leftTabs = [
   { href: "/home", label: "Home", icon: Home },
   { href: "/history", label: "History", icon: History },
-] as const;
-
-const rightTabs = [
-  { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
-  { href: "/you", label: "You", icon: User },
 ] as const;
 
 export function BottomNav() {
@@ -34,9 +30,7 @@ export function BottomNav() {
         <div className="w-20" aria-hidden />
 
         <div className="flex flex-1 items-stretch justify-around gap-1">
-          {rightTabs.map((tab) => (
-            <NavTab key={tab.href} pathname={pathname} {...tab} />
-          ))}
+          <MoreButton />
         </div>
 
         <Link
