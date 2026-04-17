@@ -38,7 +38,6 @@ export function QuickLogForm({
     return 1;
   });
   const [savedDate, setSavedDate] = useState<string>(todayLogDate);
-  const [selectedStatus, setSelectedStatus] = useState<SkinStatus | null>(todayStatus);
   const [selectedChips, setSelectedChips] = useState<Set<ChipId>>(
     () => new Set(todayTags as ChipId[]),
   );
@@ -48,7 +47,6 @@ export function QuickLogForm({
   const [error, setError] = useState<string | null>(null);
 
   async function handleStatusTap(status: SkinStatus) {
-    setSelectedStatus(status);
     const result = await saveQuickStatus(status);
     if ("error" in result) {
       setError(result.error);
