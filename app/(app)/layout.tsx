@@ -18,6 +18,16 @@ export default async function AppLayout({
     redirect("/login");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("has_onboarded")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (profile && profile.has_onboarded === false) {
+    redirect("/onboarding");
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <AppHeader />
