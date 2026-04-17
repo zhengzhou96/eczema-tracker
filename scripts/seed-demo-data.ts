@@ -46,13 +46,6 @@ function daysAgo(n: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)]!;
-}
-
-function clamp(n: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, Math.round(n)));
-}
 
 // ---------------------------------------------------------------------------
 // Data design — 30 days with realistic patterns:

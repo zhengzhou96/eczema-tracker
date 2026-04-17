@@ -171,7 +171,9 @@ SENTRY_DSN=              # Session 9+
 pnpm dev               # local dev
 pnpm build             # production build — must pass before every deploy
 pnpm lint              # ESLint
-pnpm typecheck         # tsc --noEmit (add this script)
+pnpm typecheck         # tsc --noEmit
+pnpm test:run          # Vitest unit tests (CI mode)
+pnpm seed <email>      # seed 30 days of demo data for a user (--clear to wipe first)
 vercel                 # link project
 vercel env pull        # pull env vars into .env.local
 vercel --prod          # deploy to production (CI does this on main push)
@@ -194,6 +196,18 @@ Before committing at the end of a session, all of these must be true:
 
 ## Current status
 
-**Pre-Session 1.** Prereqs installed (Node 25, pnpm 10, git, Vercel CLI 50). Awaiting: Supabase project, Anthropic API key, GitHub repo, `vercel login`. Project directory not yet scaffolded.
+**Sessions 1–12 + Redesign complete (2026-04-17).** All features shipped and pushed to origin/main.
+
+**What's built:**
+- Sessions 1–12: skeleton → auth → log form → dashboard/history → Claude analysis → home/milestones/you/calendar/routines/photo-AI/PWA
+- Product redesign: QuickLogForm (4-step), Layer 1 rule engine, Layer 2 AI copy, 3-tab + More nav, WeekStrip, dual-mode log, onboarding flow (5 screens)
+- Settings: profile edit, CSV export, account deletion with confirmation
+- Legal: /disclaimer, /privacy, /terms — linked from settings + onboarding
+- Tests: Vitest + 116 unit tests (66 engine rules, 50 analytics)
+- Seed script: `pnpm seed <email>` — 30 days of realistic data with all 5 rule findings
+
+**Remaining for production:**
+- Sentry error monitoring (`@sentry/nextjs`) — Session 9 from original plan
+- Vercel production deploy + smoke test on real device
 
 Update this section at the end of each session.

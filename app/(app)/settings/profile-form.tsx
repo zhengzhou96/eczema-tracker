@@ -47,7 +47,7 @@ export function ProfileForm({ displayName, ageRange, skinType, knownTriggers, sa
   function toggleTrigger(t: string) {
     setSelectedTriggers((prev) => {
       const next = new Set(prev);
-      next.has(t) ? next.delete(t) : next.add(t);
+      if (next.has(t)) { next.delete(t); } else { next.add(t); }
       return next;
     });
   }
