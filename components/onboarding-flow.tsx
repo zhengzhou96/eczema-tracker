@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { saveQuickStatus } from "@/app/(app)/log/quick-actions";
 import { markOnboarded } from "@/app/onboarding/actions";
@@ -167,6 +168,12 @@ export function OnboardingFlow() {
       {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
       <p className="mt-6 text-xs text-muted-foreground">
         Your first log. Takes 2 seconds.
+      </p>
+      <p className="mt-4 text-[11px] text-muted-foreground/60 text-center leading-relaxed">
+        Not medical advice. By continuing you agree to our{" "}
+        <Link href="/terms" className="underline underline-offset-2">Terms</Link>
+        {" "}and{" "}
+        <Link href="/privacy" className="underline underline-offset-2">Privacy Policy</Link>.
       </p>
     </div>
   );
