@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { saveDailyLog } from "./actions";
 
 interface LogFormProps {
-  initial: {
+  initial?: {
     itch_level: number;
     stress_level: number;
     sleep_hours: string;
@@ -25,7 +25,18 @@ interface LogFormProps {
   };
 }
 
-export function LogForm({ initial }: LogFormProps) {
+const defaultInitial: NonNullable<LogFormProps["initial"]> = {
+  itch_level: 0,
+  stress_level: 0,
+  sleep_hours: "",
+  sleep_quality: 5,
+  affected_areas: [],
+  notes: "",
+  foods: [],
+  savedPhotoCount: 0,
+};
+
+export function LogForm({ initial = defaultInitial }: LogFormProps) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
