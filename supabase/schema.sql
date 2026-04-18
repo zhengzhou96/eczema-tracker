@@ -331,7 +331,7 @@ create table if not exists public.push_subscriptions (
   endpoint   text not null,
   p256dh     text not null,
   auth       text not null,
-  created_at timestamptz default now(),
+  created_at timestamptz not null default now(),
   unique (user_id, endpoint)
 );
 
