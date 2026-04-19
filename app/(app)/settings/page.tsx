@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileForm } from "./profile-form";
 import { DeleteAccountButton } from "./delete-account-button";
+import { NotificationPermission } from "@/components/notification-permission";
 
 async function signOut() {
   "use server";
@@ -48,6 +49,16 @@ export default async function SettingsPage({
           Settings
         </h1>
       </div>
+
+      {/* Notifications */}
+      <section className="space-y-4">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+          Notifications
+        </h2>
+        <div className="rounded-3xl border border-border bg-card px-5 py-4">
+          <NotificationPermission />
+        </div>
+      </section>
 
       {/* Account */}
       <section className="space-y-3 rounded-3xl border border-border bg-card p-5">
