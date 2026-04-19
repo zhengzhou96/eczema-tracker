@@ -348,3 +348,7 @@ create policy "push_subs_insert_own" on public.push_subscriptions
 drop policy if exists "push_subs_delete_own" on public.push_subscriptions;
 create policy "push_subs_delete_own" on public.push_subscriptions
   for delete using (auth.uid() = user_id);
+
+drop policy if exists "push_subs_update_own" on public.push_subscriptions;
+create policy "push_subs_update_own" on public.push_subscriptions
+  for update using (auth.uid() = user_id);
