@@ -352,3 +352,23 @@ create policy "push_subs_delete_own" on public.push_subscriptions
 drop policy if exists "push_subs_update_own" on public.push_subscriptions;
 create policy "push_subs_update_own" on public.push_subscriptions
   for update using (auth.uid() = user_id);
+
+-- ---------------------------------------------------------------------------
+-- Stripe subscriptions
+-- ---------------------------------------------------------------------------
+create table if not exists public.subscriptions (
+  id                    uuid primary key default gen_random_uuid(),
+  user_id               uuid not null references public.profiles(id) on delete cascade,
+  stripe_customer_id    text unique,
+  stripe_subscription_id text unique,
+  status                text not null default 'inactive',
+  current_period_end    timestamptz,
+  created_at            timestamptz default now(),
+  unique (user_id)
+);
+
+alter table public.subscriptions enable row level security;
+
+drop policy if exists "subscriptions_select_own" on public.subscriptions;
+create policy "subscriptions_select_own" on public.subscriptions
+  for select using (auth.uid() = user_id);
