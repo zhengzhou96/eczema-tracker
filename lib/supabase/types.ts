@@ -264,6 +264,49 @@ export interface Database {
           },
         ];
       };
+      subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          status: "active" | "past_due" | "canceled" | "incomplete";
+          stripe_customer_id: string | null;
+          stripe_subscription_id: string | null;
+          current_period_start: string;
+          current_period_end: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          status?: "active" | "past_due" | "canceled" | "incomplete";
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          current_period_start: string;
+          current_period_end: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          status?: "active" | "past_due" | "canceled" | "incomplete";
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          current_period_start?: string;
+          current_period_end?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -286,3 +329,4 @@ export type DailyLog = Tables<"daily_logs">;
 export type FoodEntry = Tables<"food_entries">;
 export type Photo = Tables<"photos">;
 export type AiAnalysis = Tables<"ai_analyses">;
+export type Subscription = Tables<"subscriptions">;
