@@ -268,35 +268,29 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          status: "active" | "past_due" | "canceled" | "incomplete";
+          status: string;
           stripe_customer_id: string | null;
           stripe_subscription_id: string | null;
-          current_period_start: string;
-          current_period_end: string;
+          current_period_end: string | null;
           created_at: string;
-          updated_at: string;
         };
         Insert: {
           id?: string;
           user_id: string;
-          status?: "active" | "past_due" | "canceled" | "incomplete";
+          status?: string;
           stripe_customer_id?: string | null;
           stripe_subscription_id?: string | null;
-          current_period_start: string;
-          current_period_end: string;
+          current_period_end?: string | null;
           created_at?: string;
-          updated_at?: string;
         };
         Update: {
           id?: string;
           user_id?: string;
-          status?: "active" | "past_due" | "canceled" | "incomplete";
+          status?: string;
           stripe_customer_id?: string | null;
           stripe_subscription_id?: string | null;
-          current_period_start?: string;
-          current_period_end?: string;
+          current_period_end?: string | null;
           created_at?: string;
-          updated_at?: string;
         };
         Relationships: [
           {

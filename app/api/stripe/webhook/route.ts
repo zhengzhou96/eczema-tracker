@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
     event.type === "customer.subscription.created" ||
     event.type === "customer.subscription.updated"
   ) {
-    const sub = event.data.object as Stripe.Subscription;
+    const sub = event.data.object as Stripe.Subscription & { current_period_end?: number };
     const customerId = sub.customer as string;
-    const periodEnd = sub.items.data[0]?.current_period_end;
+    const periodEnd = sub.current_period_end;
     await supabase
       .from("subscriptions")
       .update({

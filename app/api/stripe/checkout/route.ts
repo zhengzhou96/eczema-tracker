@@ -25,14 +25,11 @@ export async function POST() {
       metadata: { user_id: user.id },
     });
     customerId = customer.id;
-    const epoch = new Date(0).toISOString();
     await supabase.from("subscriptions").upsert(
       {
         user_id: user.id,
         stripe_customer_id: customerId,
-        status: "incomplete",
-        current_period_start: epoch,
-        current_period_end: epoch,
+        status: "inactive",
       },
       { onConflict: "user_id" },
     );
