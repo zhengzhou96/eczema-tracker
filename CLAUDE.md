@@ -159,12 +159,11 @@ SENTRY_DSN=
 
 **Sessions 1–12 + redesign + monetization complete.**
 
-Built: auth → daily log (QuickLogForm 4-step) → dashboard/history → Claude analysis (2-layer) → home/milestones/you/calendar/routines/photo-AI → PWA → onboarding flow → settings (profile, CSV export, account delete) → legal pages → Stripe monetization (checkout/portal/webhook, free/pro tiers, Paywall component)
+Built: auth → daily log (QuickLogForm 4-step) → dashboard/history → Claude analysis (2-layer) → home/milestones/you/calendar/routines/photo-AI → PWA → onboarding flow → settings (profile, CSV export, account delete) → legal pages → Stripe monetization (checkout/portal/webhook, free/pro tiers, Paywall component), Sentry error monitoring
 
 Tests: 116 unit tests (Vitest).
 
 **Remaining:**
-- Sentry error monitoring (`@sentry/nextjs`)
 - Production smoke test on real device
 
 Update this section at the end of each session.
