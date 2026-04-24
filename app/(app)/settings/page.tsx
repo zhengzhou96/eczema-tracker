@@ -6,6 +6,9 @@ import { createClient } from "@/lib/supabase/server";
 import { ProfileForm } from "./profile-form";
 import { DeleteAccountButton } from "./delete-account-button";
 import { NotificationPermission } from "@/components/notification-permission";
+import { getUserTier } from "@/lib/subscriptions/entitlements";
+import { UpgradeButton } from "@/components/upgrade-button";
+import { ManageSubscriptionButton } from "@/components/manage-subscription-button";
 
 async function signOut() {
   "use server";
@@ -32,6 +35,7 @@ export default async function SettingsPage({
     .eq("id", user.id)
     .maybeSingle();
 
+  const tier = await getUserTier(user.id);
   const params = await searchParams;
   const saved = params.saved === "1";
 
@@ -106,6 +110,41 @@ export default async function SettingsPage({
           <Download className="size-4" aria-hidden />
           Download CSV
         </a>
+      </section>
+
+      {/* Subscription */}
+      <section className="space-y-4">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+          Subscription
+        </h2>
+        <div className="rounded-3xl border border-border bg-card p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-bold">
+                {tier === "pro" ? "EczemaTrack Pro" : "Free tier"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {tier === "pro"
+                  ? "AI insights, predictions, CSV export"
+                  : "Logging + basic patterns"}
+              </p>
+            </div>
+            <span
+              className={`rounded-full px-2.5 py-1 text-[10px] font-black ${
+                tier === "pro"
+                  ? "bg-primary/10 text-primary"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {tier === "pro" ? "PRO" : "FREE"}
+            </span>
+          </div>
+          {tier === "pro" ? (
+            <ManageSubscriptionButton />
+          ) : (
+            <UpgradeButton label="Upgrade to Pro — $8/month" />
+          )}
+        </div>
       </section>
 
       {/* Legal */}

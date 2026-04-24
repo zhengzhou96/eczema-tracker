@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getUserTier } from "@/lib/subscriptions/entitlements";
 
 function escape(v: string | number | null | undefined): string {
   if (v == null) return "";
@@ -18,6 +19,11 @@ export async function GET() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const tier = await getUserTier(user.id);
+  if (tier !== "pro") {
+    return new Response("Pro subscription required", { status: 403 });
+  }
 
   const { data: logs } = await supabase
     .from("daily_logs")
