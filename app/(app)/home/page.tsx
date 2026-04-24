@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { WeekStrip, buildWeekDays } from "@/components/week-strip";
 import { getFindings, getPrediction } from "@/lib/insights/engine";
 import { getOrGenerateInsightCopy } from "@/lib/insights/copy-generator";
+import { getUserTier, findingBasicDescription } from "@/lib/subscriptions/entitlements";
+import { Paywall } from "@/components/paywall";
 import type { InsightLog, InsightFood } from "@/lib/insights/engine";
 
 function greeting(hour: number): string {
@@ -25,6 +27,8 @@ export default async function HomePage() {
   } = await supabase.auth.getUser();
 
   if (!user) return null;
+
+  const tier = await getUserTier(user.id);
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -67,7 +71,7 @@ export default async function HomePage() {
   const prediction = getPrediction(insightLogs);
 
   let insightCopy = null;
-  if (findings.length > 0) {
+  if (findings.length > 0 && tier === "pro") {
     insightCopy = await getOrGenerateInsightCopy(user.id, findings, prediction);
   }
 
@@ -155,18 +159,18 @@ export default async function HomePage() {
         ) : (
           <div className="space-y-3">
             {findings.slice(0, 3).map((finding) => {
-              const copy = insightCopy?.insights.find(
-                (i) => i.rule === finding.rule,
-              )?.copy;
+              const copy =
+                tier === "pro"
+                  ? (insightCopy?.insights.find((i) => i.rule === finding.rule)?.copy ?? null)
+                  : null;
+              const text = copy ?? findingBasicDescription(finding);
               return (
                 <div
                   key={finding.rule}
                   className="rounded-3xl border border-border bg-card p-5"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-medium leading-relaxed">
-                      {copy ?? "Pattern detected in your logs."}
-                    </p>
+                    <p className="text-sm font-medium leading-relaxed">{text}</p>
                     <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
                       {CONFIDENCE_LABELS[finding.confidence]}
                     </span>
@@ -174,27 +178,45 @@ export default async function HomePage() {
                 </div>
               );
             })}
+            {tier === "free" && findings.length > 0 && (
+              <Link
+                href="/upgrade"
+                className="flex items-center justify-between rounded-3xl border border-primary/30 bg-primary/5 p-4 text-sm"
+              >
+                <span className="font-semibold text-primary">
+                  Unlock AI-powered insights →
+                </span>
+                <span className="text-xs text-muted-foreground">Pro</span>
+              </Link>
+            )}
           </div>
         )}
       </section>
 
       {totalLogs >= 2 && prediction !== "neutral" && (
-        <section
-          className="rounded-3xl p-5 text-white"
-          style={{ background: "#163300" }}
-        >
-          <h2 className="text-xs font-bold uppercase tracking-widest opacity-60">
-            Tomorrow&apos;s Forecast
-          </h2>
-          <p className="mt-2 text-lg font-black">
-            {prediction === "elevated"
-              ? "⚠️ Elevated risk"
-              : "✅ Skin likely stable"}
-          </p>
-          {insightCopy?.prediction && (
-            <p className="mt-1 text-sm opacity-70">{insightCopy.prediction}</p>
-          )}
-        </section>
+        tier === "pro" ? (
+          <section
+            className="rounded-3xl p-5 text-white"
+            style={{ background: "#163300" }}
+          >
+            <h2 className="text-xs font-bold uppercase tracking-widest opacity-60">
+              Tomorrow&apos;s Forecast
+            </h2>
+            <p className="mt-2 text-lg font-black">
+              {prediction === "elevated"
+                ? "⚠️ Elevated risk"
+                : "✅ Skin likely stable"}
+            </p>
+            {insightCopy?.prediction && (
+              <p className="mt-1 text-sm opacity-70">{insightCopy.prediction}</p>
+            )}
+          </section>
+        ) : (
+          <Paywall
+            feature="Tomorrow's Prediction"
+            description="See your flare risk forecast based on recent patterns"
+          />
+        )
       )}
 
       <section className="rounded-3xl border border-border bg-card p-5 space-y-3">
